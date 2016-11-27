@@ -2,6 +2,7 @@
 - hosts: all
   gather_facts: yes
   remote_user: root
+  become: true
 
   vars:
     autokey_use_backup: false

@@ -1,8 +1,10 @@
 ---
-- hosts: localhost
+- hosts: all
   remote_user: root
+
   vars:
     autokey_use_backup: false
     autokey_symlink_backup: false
+
   roles:
     - ansible-role-autokey

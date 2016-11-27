@@ -1,4 +1,0 @@
----
-autokey_use_backup: false
-autokey_symlink_backup: false
-os_username: "{{ ansible_user_id }}"

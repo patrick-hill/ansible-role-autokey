@@ -6,4 +6,3 @@
     autokey_symlink_backup: false
   roles:
     - ansible-role-autokey
-

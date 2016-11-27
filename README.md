@@ -1,7 +1,10 @@
 Ansible Role: AutoKey
 =========
 
-Installs AutoKey on Debian based OS and allows using a backup and/or symlinking to a backup dir.
+[![Build Status](https://travis-ci.org/patrick-hill/ansible-role-autokey.svg?branch=master)](https://travis-ci.org/patrick-hill/ansible-role-autokey)
+
+
+Installs [AutoKey](https://code.google.com/archive/p/autokey/) on Debian based OS and allows using a backup and/or symlinking to a backup dir.
 
 Requirements
 ------------
@@ -56,4 +59,4 @@ MIT / BSD
 Author Information
 ------------------
 
-Role written in 2016 by [Patrick Hill](www.HillsPCWorld.com) 
+Role written in 2016 by [Patrick Hill](http://www.HillsPCWorld.com) 

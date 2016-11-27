@@ -1,0 +1,45 @@
+---
+- name: Install Autokey-gtk package
+  apt: pkg={{ item }} state=installed
+  with_items: "{{ __autokey_packages | list }}"
+  become: true
+  register: installed
+
+- block:
+    - name: Check Autokey Config Dir
+      stat: path={{ autokey_config_dir }}
+      register: configDir
+
+    - name: Rename Default Config Dir as Backup
+      command:  mv {{ autokey_config_dir }} "{{ autokey_config_dir }}.bak"
+                creates="{{ autokey_config_dir }}.bak"
+                removes={{ autokey_config_dir }}
+      when:
+        - configDir.stat.exists
+        - autokey_use_backup
+        - autokey_backup_dir is defined # Must define the backup source dir
+
+    - name: Restore Backup Dir
+      copy: src={{ autokey_backup_dir }}
+            dest={{ autokey_config_dir }}
+      when:
+        - autokey_use_backup
+        - not autokey_symlink_backup # Don't copy if we're symlinking
+
+    - name: Symlink Backup Dir
+      file: src={{ autokey_backup_dir }}
+            dest={{ autokey_config_dir }}
+            state=link
+      when:
+        - autokey_use_backup
+        - autokey_symlink_backup
+
+  when: installed.changed
+
+  rescue:
+    - name: ERRORED - Removing AutoKey packages
+      package: name={{ item }} state=absent
+      with_items: "{{ __autokey_packages | list }}"
+      become: true
+
+    - fail: msg="This role has failed. Review the run log or run again with -vvv for additional information. Be sure all pathing is correct!"

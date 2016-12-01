@@ -1,5 +1,1 @@
-# Intellij Files
-.idea/*
-workspace.xml
-rebel_project.xml
-misc.xml
+*.iml

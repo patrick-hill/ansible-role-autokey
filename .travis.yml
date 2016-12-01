@@ -38,7 +38,7 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  # Make sure autokey installed
+  # Verify installation
   - >
     dpkg -s autokey-gtk | grep 'Status: install ok installed'
     && (echo 'Status code 200 test: pass' && exit 0)

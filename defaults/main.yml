@@ -1,7 +1,7 @@
 ---
 autokey_use_backup: true
 autokey_symlink_backup: true
-os_username: "{{ ansible_user_id }}"
+os_username: "{{ lookup('env','USER') }}"
 
 autokey_config_dir: "/home/{{ os_username }}/.config/autokey"
 autokey_backup_dir: "{{ backup_dir_root }}/configs/autokey"

@@ -2,7 +2,8 @@ Ansible Role: AutoKey
 =========
 
 [![Build Status](https://travis-ci.org/patrick-hill/ansible-role-autokey.svg?branch=master)](https://travis-ci.org/patrick-hill/ansible-role-autokey)
-[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-patrick-hill.autokey-blue.svg)](https://galaxy.ansible.com/patrick-hill/autokey)
+[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-patrick--hill.autokey-blue.svg)](https://galaxy.ansible.com/patrick-hill/autokey)
+
 
 Installs [AutoKey](https://code.google.com/archive/p/autokey/) on Debian based OS and allows using a backup and/or symlinking to a backup dir.
 

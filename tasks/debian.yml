@@ -14,27 +14,23 @@
       command:  mv {{ autokey_config_dir }} "{{ autokey_config_dir }}.bak"
                 creates="{{ autokey_config_dir }}.bak"
                 removes={{ autokey_config_dir }}
-      when:
-        - configDir.stat.exists
-        - autokey_use_backup
-        - autokey_backup_dir is defined # Must define the backup source dir
+      when: configDir.stat.exists
 
     - name: Restore Backup Dir
       copy: src={{ autokey_backup_dir }}
             dest={{ autokey_config_dir }}
-      when:
-        - autokey_use_backup
-        - not autokey_symlink_backup # Don't copy if we're symlinking
+      when: not autokey_symlink_backup # Don't copy if we're symlinking
 
     - name: Symlink Backup Dir
       file: src={{ autokey_backup_dir }}
             dest={{ autokey_config_dir }}
             state=link
-      when:
-        - autokey_use_backup
-        - autokey_symlink_backup
+      when: autokey_symlink_backup
 
-  when: installed.changed
+  when:
+    - installed.changed
+    - autokey_use_backup
+    - autokey_backup_dir is defined
 
   rescue:
     - name: ERRORED - Removing AutoKey packages

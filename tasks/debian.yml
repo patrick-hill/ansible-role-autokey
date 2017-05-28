@@ -1,11 +1,15 @@
 ---
 - name: Install Autokey-gtk package
-  apt: pkg={{ item }} state=installed
-  with_items: "{{ __autokey_packages | list }}"
+  apt: 
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - autokey-gtk
   become: true
   register: installed
 
 - block:
+
     - name: Check Autokey Config Dir
       stat: path={{ autokey_config_dir }}
       register: configDir
@@ -17,25 +21,44 @@
       when: configDir.stat.exists
 
     - name: Restore Backup Dir
-      copy: src={{ autokey_backup_dir }}
-            dest={{ autokey_config_dir }}
-      when: not autokey_symlink_backup # Don't copy if we're symlinking
+      copy: 
+        src:  "{{ autokey_backup_dir }}"
+        dest: "{{ autokey_config_dir }}"
+      when: not autokey_backup_symlink
 
     - name: Symlink Backup Dir
-      file: src={{ autokey_backup_dir }}
-            dest={{ autokey_config_dir }}
-            state=link
-      when: autokey_symlink_backup
+      file: 
+        src:    "{{ autokey_backup_dir }}"
+        dest:   "{{ autokey_config_dir }}"
+        state:  link
+      when: autokey_backup_symlink
 
   when:
     - installed.changed
-    - autokey_use_backup
+    - autokey_backup_restore
     - autokey_backup_dir is defined
 
   rescue:
+    
     - name: ERRORED - Removing AutoKey packages
-      package: name={{ item }} state=absent
-      with_items: "{{ __autokey_packages | list }}"
+      package:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - autokey-gtk
       become: true
+
+    - name: Remove Backuped Up Config Dir
+      file: 
+        src:    "{{ autokey_config_dir }}.bak"
+        state:  absent
+      ignore_errors: true
+
+    - name: Remove Symlinked Backup Dir
+      file: 
+        src:    "{{ autokey_config_dir }}"
+        state:  absent
+      when: autokey_backup_symlink
+      ignore_errors: true
 
     - fail: msg="This role has failed. Review the run log or run again with -vvv for additional information. Be sure all pathing is correct!"

@@ -17,12 +17,12 @@ Role Variables
 
 The below are defined in vars and defaults: `vars/main.yml and defaults/main.yml`:
 
-    autokey_use_backup
-"autokey_use_backup" allows you to restore a backup of the configs/phrases
+    autokey_backup_restore
+"autokey_backup_restore" allows you to restore a backup of the configs/phrases
 Pathing assumes you use a common backup dir <root>/configs/autokey
 
-    autokey_symlink_backup
-"autokey_symlink_backup" allows you to symlink your backup dir to AutoKey's config dir
+    autokey_backup_symlink
+"autokey_backup_symlink" allows you to symlink your backup dir to AutoKey's config dir
     
     autokey_config_dir
 "autokey_config_dir" is the default path for AutoKeys config directory which defaults to: /home/$USER/.config/autokey
@@ -46,8 +46,8 @@ Example Playbook
 
 *Inside `vars/main.yml`*:
 
-    autokey_use_backup: true
-    autokey_symlink_backup: false
+    autokey_backup_restore: false
+    autokey_backup_symlink: false
 
 License
 -------

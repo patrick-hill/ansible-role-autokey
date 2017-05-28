@@ -5,8 +5,8 @@
   become: true
 
   vars:
-    autokey_use_backup: false
-    autokey_symlink_backup: false
+    autokey_backup_restore: false
+    autokey_backup_symlink: false
 
   roles:
     - ansible-role-autokey

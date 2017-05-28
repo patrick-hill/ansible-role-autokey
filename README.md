@@ -24,10 +24,6 @@ Pathing assumes you use a common backup dir <root>/configs/autokey
     autokey_symlink_backup
 "autokey_symlink_backup" allows you to symlink your backup dir to AutoKey's config dir
     
-    os_username
-"os_username" is used to build the path for autokey's config dir. This value should be the target users username.
-If you're using non standard pathing, this var will NOT be needed but be sure to provide a full path for autokey_config_dir
-
     autokey_config_dir
 "autokey_config_dir" is the default path for AutoKeys config directory which defaults to: /home/$USER/.config/autokey
 
@@ -43,6 +39,8 @@ Example Playbook
 ----------------
 
     - hosts: development-machines
+      vars:
+        os_username: 'Your_OS_Username'
       roles:
         - { role: patrick-hill.autokey}
 
@@ -50,7 +48,6 @@ Example Playbook
 
     autokey_use_backup: true
     autokey_symlink_backup: false
-    os_username: 'phill'
 
 License
 -------
